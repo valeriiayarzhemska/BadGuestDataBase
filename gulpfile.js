@@ -30,7 +30,7 @@ const paths = {
     dest: 'dist/',
   },
   assets: {
-    src: 'src/assets/**/*.{png,jpg,jpeg,gif,svg,pdf}',
+    src: 'src/assets/**/*.{png,jpg,jpeg,gif,svg,pdf,ttf,eot}',
     dest: 'dist/src/assets/',
   },
 };
@@ -63,6 +63,10 @@ gulp.task('scripts', function () {
     .pipe(browserSync.stream());
 });
 
+gulp.task('assets', function () {
+  return gulp.src(paths.assets.src).pipe(gulp.dest(paths.assets.dest));
+});
+
 gulp.task('html', function () {
   return gulp
     .src(paths.html.src)
@@ -74,16 +78,14 @@ gulp.task('html', function () {
     )
     .pipe(replace('dist/src/styles', 'src/styles'))
     .pipe(replace('dist/src/scripts', 'src/scripts'))
-    .pipe(gulp.dest(paths.html.dest));
-});
-
-gulp.task('assets', function () {
-  return gulp.src(paths.assets.src).pipe(gulp.dest(paths.assets.dest));
+    .pipe(replace('dist/src/assets', 'src/scripts'))
+    .pipe(gulp.dest(paths.html.dest))
+    .pipe(browserSync.stream());
 });
 
 gulp.task('serve', function () {
   server.init({
-    server: './',
+    server: 'dist',
     notify: false,
     open: true,
     cors: true,
@@ -102,12 +104,12 @@ gulp.task('serve', function () {
   gulp.watch(paths.html.src, gulp.series('html')).on('change', server.reload);
 });
 
-gulp.task('default', gulp.series('clean', 'serve'));
-
 export const build = gulp.task(
   'build',
-  gulp.series('clean', gulp.parallel('styles', 'scripts', 'html'))
+  gulp.series('clean', gulp.parallel('styles', 'scripts', 'assets', 'html'))
 );
+
+gulp.task('default', gulp.series('build', 'serve'));
 
 gulp.task('deploy', function () {
   return gulp.src('./dist/**/*').pipe(ghPages());

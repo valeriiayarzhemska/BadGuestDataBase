@@ -1,0 +1,39 @@
+@import '../utils/mixins';
+@import '../utils/vars';
+
+.nav {
+  &__content {
+    @include flexColumnJustifyAlignBetween;
+    padding: 3.2rem 10rem;
+  }
+
+  &__logo {
+    width: 9.2rem;
+    height: 4.4rem;
+
+    &__image {
+      @include fullImageContainerCover;
+    }
+  }
+
+  &__list {
+    @include flexJustifyAlignCenter;
+    gap: 6.4rem;
+  }
+
+  &__link {
+    font-size: 1.6rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    color: $main-dark;
+  }
+
+  &__buttons {
+    @include flexAlignCenter;
+    gap: 1.2rem;
+
+    &__button {
+
+    }
+  }
+}

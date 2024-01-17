@@ -1,0 +1,24 @@
+@import '../utils/mixins';
+@import '../utils/vars';
+
+.button {
+  &__link {
+    @include inlineFlexJustifyAlignCenter;
+    padding: 1.2rem 1rem;
+    width: 9.6rem;
+    font-family: 'Gilroy-Regular', sans-serif;
+    font-size: 1.4rem;
+    font-weight: 400;
+    text-transform: uppercase;
+    color: $white;
+    background-color: $main-blue;
+    border: 0.2rem solid $main-blue;
+    border-radius: 2.2rem;
+    cursor: pointer;
+  }
+
+  &__link--outline {
+    color: $main-blue;
+    background-color: transparent;
+  }
+}
